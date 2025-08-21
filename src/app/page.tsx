@@ -20,10 +20,13 @@ const TestDriveLeadForm: React.FC = () => {
 
   // Example product dropdown options
   const productOptions = [
-    { label: "Toyota Camry 2024", value: "01tgK000004gAlRQAU" },
-    { label: "Honda Civic 2024", value: "civic-2024" },
-    { label: "Mazda CX-5 2024", value: "cx5-2024" },
-    { label: "Nissan X-Trail 2024", value: "xtrail-2024" },
+    { label: 'Fortuern-GR-2024-Black-AWD', value: '01tgK000004g7u1QAA' },
+    { label: 'Camry-GR-2024-Silver-AT', value: '01tgK000004gAlRQAU' },
+    { label: 'Fortuner-GR-2024-White-AT', value: '01tgK000004o3QDQAY' },
+    { label: 'Voxy-G-2024-Black-AT', value: '01tgK000004tGifQAE' },
+    { label: 'Yaris Cross-R-2022-White-AT', value: '01tgK000004tMNNQA2' },
+    { label: 'Agya-RS-2024-Red-MT', value: '01tgK000004tMOzQAM' },
+    { label: 'Alphard-GR-2024-Black-AT', value: '01tgK000004u6EvQAI' },
   ];
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
