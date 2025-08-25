@@ -12,13 +12,12 @@ const TestDriveLeadForm: React.FC = () => {
     city: "",
     country_code: "",
     state_code: "",
-    test_drive: false,       // local state
-    schedule_date: "",       // local state (YYYY-MM-DD)
+    test_drive: false,
+    schedule_date: "",
     location: "",
-    product_ext: ""          // local state
+    product_ext: ""
   });
 
-  // Example product dropdown options
   const productOptions = [
     { label: 'Fortuern-GR-2024-Black-AWD', value: '01tgK000004g7u1QAA' },
     { label: 'Camry-GR-2024-Silver-AT', value: '01tgK000004gAlRQAU' },
@@ -45,105 +44,114 @@ const TestDriveLeadForm: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-black text-white">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-black via-zinc-900 to-gray-800 px-4">
       <form
         action="https://webto.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8&orgId=00DgK0000058qUn"
         method="POST"
-        className="bg-zinc-900 p-10 rounded-2xl shadow-lg max-w-lg w-full space-y-5"
+        className="bg-zinc-900/90 backdrop-blur-md p-10 rounded-2xl shadow-2xl max-w-2xl w-full space-y-6 border border-zinc-800"
       >
         {/* Salesforce hidden fields */}
         <input type="hidden" name="oid" value="00DgK0000058qUn" />
         <input type="hidden" name="retURL" value="http://webtoleadsalesforce.vercel.app" />
-
-        {/* Mirror local state to Salesforce field IDs */}
-        {/* product ext -> 00NgK00001NJC6K */}
         <input type="hidden" name="00NgK00001NJC6K" value={formData.product_ext} />
-        {/* test drive checkbox -> 00NgK0000167sqv (send 1 or 0) */}
         <input type="hidden" name="00NgK0000167sqv" value={formData.test_drive ? "1" : "0"} />
-        {/* schedule date -> 00NgK000016V8i5 */}
         <input type="hidden" name="00NgK000016V8i5" value={formData.schedule_date} />
-        {/* location -> 00NgK00001HG4oh */}
         <input type="hidden" name="00NgK00001HG4oh" value={formData.location} />
 
-        <h1 className="text-2xl font-bold text-center mb-6">Test Drive Lead Form</h1>
-
-        {/* First Name */}
-        <div>
-          <label className="block text-sm mb-1">First Name</label>
-          <input
-            className="w-full p-2 rounded bg-zinc-800 border border-zinc-700"
-            type="text"
-            name="first_name"
-            value={formData.first_name}
-            onChange={handleInputChange}
-          />
+        {/* Header */}
+        <div className="text-center space-y-2">
+          <h1 className="text-3xl font-extrabold text-white tracking-tight">
+            🚗 GG Automotive Test Drive
+          </h1>
+          <p className="text-zinc-400">Fill the form below to book your exclusive test drive.</p>
         </div>
 
-        {/* Last Name */}
-        <div>
-          <label className="block text-sm mb-1">Last Name</label>
-          <input
-            className="w-full p-2 rounded bg-zinc-800 border border-zinc-700"
-            type="text"
-            name="last_name"
-            value={formData.last_name}
-            onChange={handleInputChange}
-          />
+        {/* Grid Form */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+          {/* First Name */}
+          <div>
+            <label className="block text-sm mb-1 text-zinc-300">First Name</label>
+            <input
+              className="w-full p-3 rounded-lg bg-zinc-800 border border-zinc-700 focus:ring-2 focus:ring-red-500 focus:outline-none"
+              type="text"
+              name="first_name"
+              value={formData.first_name}
+              onChange={handleInputChange}
+              placeholder="John"
+            />
+          </div>
+
+          {/* Last Name */}
+          <div>
+            <label className="block text-sm mb-1 text-zinc-300">Last Name</label>
+            <input
+              className="w-full p-3 rounded-lg bg-zinc-800 border border-zinc-700 focus:ring-2 focus:ring-red-500 focus:outline-none"
+              type="text"
+              name="last_name"
+              value={formData.last_name}
+              onChange={handleInputChange}
+              placeholder="Doe"
+            />
+          </div>
+
+          {/* Email */}
+          <div>
+            <label className="block text-sm mb-1 text-zinc-300">Email</label>
+            <input
+              className="w-full p-3 rounded-lg bg-zinc-800 border border-zinc-700 focus:ring-2 focus:ring-red-500 focus:outline-none"
+              type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleInputChange}
+              placeholder="johndoe@email.com"
+            />
+          </div>
+
+          {/* Phone */}
+          <div>
+            <label className="block text-sm mb-1 text-zinc-300">Phone</label>
+            <input
+              className="w-full p-3 rounded-lg bg-zinc-800 border border-zinc-700 focus:ring-2 focus:ring-red-500 focus:outline-none"
+              type="text"
+              name="phone"
+              value={formData.phone}
+              onChange={handleInputChange}
+              placeholder="+62 812 3456 7890"
+            />
+          </div>
+
+          {/* Company */}
+          <div>
+            <label className="block text-sm mb-1 text-zinc-300">Company</label>
+            <input
+              className="w-full p-3 rounded-lg bg-zinc-800 border border-zinc-700 focus:ring-2 focus:ring-red-500 focus:outline-none"
+              type="text"
+              name="company"
+              value={formData.company}
+              onChange={handleInputChange}
+              placeholder="GG Automotive"
+            />
+          </div>
+
+          {/* City */}
+          <div>
+            <label className="block text-sm mb-1 text-zinc-300">City</label>
+            <input
+              className="w-full p-3 rounded-lg bg-zinc-800 border border-zinc-700 focus:ring-2 focus:ring-red-500 focus:outline-none"
+              type="text"
+              name="city"
+              value={formData.city}
+              onChange={handleInputChange}
+              placeholder="Jakarta"
+            />
+          </div>
         </div>
 
-        {/* Email */}
+        {/* Vehicle Select */}
         <div>
-          <label className="block text-sm mb-1">Email</label>
-          <input
-            className="w-full p-2 rounded bg-zinc-800 border border-zinc-700"
-            type="email"
-            name="email"
-            value={formData.email}
-            onChange={handleInputChange}
-          />
-        </div>
-
-        {/* Phone */}
-        <div>
-          <label className="block text-sm mb-1">Phone</label>
-          <input
-            className="w-full p-2 rounded bg-zinc-800 border border-zinc-700"
-            type="text"
-            name="phone"
-            value={formData.phone}
-            onChange={handleInputChange}
-          />
-        </div>
-
-        {/* Company */}
-        <div>
-          <label className="block text-sm mb-1">Company</label>
-          <input
-            className="w-full p-2 rounded bg-zinc-800 border border-zinc-700"
-            type="text"
-            name="company"
-            value={formData.company}
-            onChange={handleInputChange}
-          />
-        </div>
-
-        {/* City */}
-        <div>
-          <label className="block text-sm mb-1">City</label>
-          <input
-            className="w-full p-2 rounded bg-zinc-800 border border-zinc-700"
-            type="text"
-            name="city"
-            value={formData.city}
-            onChange={handleInputChange}
-          />
-        </div>
-
-        {/* Product Dropdown (bind to local state key, not SF id) */}
-        <div>
-          <label className="block text-sm mb-1">Select Vehicle</label>
+          <label className="block text-sm mb-1 text-zinc-300">Select Vehicle</label>
           <select
-            className="w-full p-2 rounded bg-zinc-800 border border-zinc-700"
+            className="w-full p-3 rounded-lg bg-zinc-800 border border-zinc-700 focus:ring-2 focus:ring-red-500 focus:outline-none"
             name="product_ext"
             value={formData.product_ext}
             onChange={handleSelectChange}
@@ -157,48 +165,49 @@ const TestDriveLeadForm: React.FC = () => {
           </select>
         </div>
 
-        {/* Test Drive (bind to local state key, not SF id) */}
-        <div className="flex items-center">
+        {/* Test Drive */}
+        <div className="flex items-center space-x-2">
           <input
             type="checkbox"
             name="test_drive"
             checked={formData.test_drive}
             onChange={handleCheckboxChange}
-            className="mr-2"
+            className="h-4 w-4 text-red-500 focus:ring-red-500 border-zinc-600 rounded"
           />
-          <label>Test Drive Requested?</label>
+          <label className="text-zinc-300">Request Test Drive?</label>
         </div>
 
-        {/* Schedule Date (bind to local state key, not SF id) */}
+        {/* Schedule Date */}
         <div>
-          <label className="block text-sm mb-1">Schedule Date</label>
+          <label className="block text-sm mb-1 text-zinc-300">Schedule Date & Time</label>
           <input
-            className="w-full p-2 rounded bg-zinc-800 border border-zinc-700"
-            type="date"
+            className="w-full p-3 rounded-lg bg-zinc-800 border border-zinc-700 focus:ring-2 focus:ring-red-500 focus:outline-none"
+            type="datetime-local"
             name="schedule_date"
             value={formData.schedule_date}
             onChange={handleInputChange}
           />
         </div>
 
-        {/* Location (bind to local state) */}
+        {/* Location */}
         <div>
-          <label className="block text-sm mb-1">Location</label>
+          <label className="block text-sm mb-1 text-zinc-300">Location</label>
           <input
-            className="w-full p-2 rounded bg-zinc-800 border border-zinc-700"
+            className="w-full p-3 rounded-lg bg-zinc-800 border border-zinc-700 focus:ring-2 focus:ring-red-500 focus:outline-none"
             type="text"
             name="location"
             value={formData.location}
             onChange={handleInputChange}
+            placeholder="GG Automotive Showroom"
           />
         </div>
 
         {/* Submit */}
         <button
           type="submit"
-          className="w-full p-3 rounded bg-white text-black font-bold hover:bg-gray-300 transition"
+          className="w-full py-3 rounded-lg bg-gradient-to-r from-red-500 to-red-600 text-white font-bold hover:from-red-600 hover:to-red-700 shadow-lg transition duration-300"
         >
-          Submit Lead
+          🚀 Submit Lead
         </button>
       </form>
     </div>
