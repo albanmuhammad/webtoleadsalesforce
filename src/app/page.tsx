@@ -80,8 +80,6 @@ const TestDriveLeadForm: React.FC = () => {
 
 
         <input type="hidden" name="00NgK00001HG4oh" value={formData.location} />
-        <input type="hidden" name="debug" value="1" />
-        <input type="hidden" name="debugEmail" value="albanmuhammad07@gmail.com" />
 
         {/* Header */}
         <div className="text-center space-y-2">
@@ -214,6 +212,26 @@ const TestDriveLeadForm: React.FC = () => {
           />
           {/* Optional: debug preview */}
         </div>
+
+        <p className="mt-1 text-xs text-zinc-500">
+          Local input: {formData.schedule_date || '—'}
+        </p>
+        <p className="text-xs text-zinc-500">
+          Will send (US): {
+            (() => {
+              if (!formData.schedule_date) return '—';
+              const d = new Date(formData.schedule_date);
+              const M = d.getMonth() + 1, D = d.getDate(), yyyy = d.getFullYear();
+              let h = d.getHours(); const mm = String(d.getMinutes()).padStart(2, '0');
+              const ss = String(d.getSeconds()).padStart(2, '0');
+              const ampm = h >= 12 ? 'PM' : 'AM'; h = h % 12 || 12;
+              return `${M}/${D}/${yyyy} ${h}:${mm}:${ss} ${ampm}`;
+            })()
+          }
+        </p>
+        <p className="text-xs text-zinc-500">
+          ISO (UTC): {formData.schedule_date ? new Date(formData.schedule_date).toISOString() : '—'}
+        </p>
 
         {/* Location */}
         <div>
