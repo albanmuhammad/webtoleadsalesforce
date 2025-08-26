@@ -61,7 +61,7 @@ const TestDriveLeadForm: React.FC = () => {
         {/* Header */}
         <div className="text-center space-y-2">
           <h1 className="text-3xl font-extrabold text-white tracking-tight">
-            🚗 GG Automotive Test Drive
+            GG Automotive Test Drive
           </h1>
           <p className="text-zinc-400">Fill the form below to book your exclusive test drive.</p>
         </div>
