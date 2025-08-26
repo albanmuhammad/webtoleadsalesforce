@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 
 const TestDriveLeadForm: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -17,6 +17,20 @@ const TestDriveLeadForm: React.FC = () => {
     location: "",
     product_ext: ""
   });
+
+  const scheduleForSF = useMemo(() => {
+    if (!formData.schedule_date) return "";
+    const d = new Date(formData.schedule_date); // treated as local time
+    const pad = (n: number) => n.toString().padStart(2, '0');
+    const mm = pad(d.getMonth() + 1);
+    const dd = pad(d.getDate());
+    const yyyy = d.getFullYear();
+    let hrs = d.getHours();
+    const mins = pad(d.getMinutes());
+    const ampm = hrs >= 12 ? 'PM' : 'AM';
+    hrs = hrs % 12; if (hrs === 0) hrs = 12;
+    return `${mm}/${dd}/${yyyy} ${hrs}:${mins} ${ampm}`;
+  }, [formData.schedule_date]);
 
   const productOptions = [
     { label: 'Fortuern-GR-2024-Black-AWD', value: '01tgK000004g7u1QAA' },
@@ -55,7 +69,7 @@ const TestDriveLeadForm: React.FC = () => {
         <input type="hidden" name="retURL" value="http://webtoleadsalesforce.vercel.app" />
         <input type="hidden" name="00NgK00001NJC6K" value={formData.product_ext} />
         <input type="hidden" name="00NgK0000167sqv" value={formData.test_drive ? "1" : "0"} />
-        <input type="hidden" name="00NgK000016V8i5" value={formData.schedule_date} />
+        <input type="hidden" name="00NgK000016V8i5" value={scheduleForSF} />
         <input type="hidden" name="00NgK00001HG4oh" value={formData.location} />
 
         {/* Header */}
@@ -187,6 +201,8 @@ const TestDriveLeadForm: React.FC = () => {
             value={formData.schedule_date}
             onChange={handleInputChange}
           />
+          {/* Optional: debug preview */}
+          {/* <p className="text-xs text-zinc-500 mt-1">SF will receive: {scheduleForSF || '—'}</p> */}
         </div>
 
         {/* Location */}
