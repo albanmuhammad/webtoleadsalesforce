@@ -202,7 +202,7 @@ const TestDriveLeadForm: React.FC = () => {
             onChange={handleInputChange}
           />
           {/* Optional: debug preview */}
-          {/* <p className="text-xs text-zinc-500 mt-1">SF will receive: {scheduleForSF || '—'}</p> */}
+          <p className="text-xs text-zinc-500 mt-1">SF will receive: {scheduleForSF || '—'}</p>
         </div>
 
         {/* Location */}
