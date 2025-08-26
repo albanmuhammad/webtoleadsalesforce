@@ -62,10 +62,11 @@ const TestDriveLeadForm: React.FC = () => {
             (() => {
               if (!formData.schedule_date) return "";
               const d = new Date(formData.schedule_date);
-              return d.toISOString().split('.')[0] + "Z";
+              return d.toISOString(); // ISO 8601: YYYY-MM-DDTHH:mm:ss.sssZ
             })()
           }
         />
+
         <input type="hidden" name="00NgK00001HG4oh" value={formData.location} />
 
         {/* Header */}
