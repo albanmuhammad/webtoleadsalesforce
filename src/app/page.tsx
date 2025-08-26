@@ -57,27 +57,31 @@ const TestDriveLeadForm: React.FC = () => {
         <input type="hidden" name="00NgK0000167sqv" value={formData.test_drive ? "1" : "0"} />
         <input
           type="hidden"
-          name="00NgK000016V8i5" // pastikan ini Field Id dari generator Web-to-Lead utk Schedule_Date__c (Lead)
+          name="00NgK000016V8i5" // Schedule Date (Lead)
           value={
             (() => {
-              if (!formData.schedule_date) return "";
-              // schedule_date dari <input type="datetime-local"> berbentuk "YYYY-MM-DDTHH:mm"
-              const d = new Date(formData.schedule_date); // dianggap LOCAL time user
-              const M = d.getMonth() + 1;                // tanpa leading zero
-              const D = d.getDate();                     // tanpa leading zero
+              const raw = formData.schedule_date?.trim();
+              if (!raw) return "";
+              // raw contoh: "2025-08-29T10:10"
+              const d = new Date(raw); // lokal browser
+              const M = (d.getMonth() + 1).toString();   // tanpa leading zero
+              const D = d.getDate().toString();          // tanpa leading zero
               const yyyy = d.getFullYear();
               let h = d.getHours();
               const mm = d.getMinutes().toString().padStart(2, "0");
-              const ss = d.getSeconds().toString().padStart(2, "0");
+              const ss = d.getSeconds().toString().padStart(2, "0"); // biasanya "00"
               const ampm = h >= 12 ? "PM" : "AM";
               h = h % 12; if (h === 0) h = 12;
-              // => "M/D/YYYY h:mm:ss AM/PM"
-              return `${M}/${D}/${yyyy} ${h}:${mm}:${ss} ${ampm}`;
+              // Format final, lalu trim untuk cegah spasi aneh
+              return `${M}/${D}/${yyyy} ${h}:${mm}:${ss} ${ampm}`.trim();
             })()
           }
         />
 
+
         <input type="hidden" name="00NgK00001HG4oh" value={formData.location} />
+        <input type="hidden" name="debug" value="1" />
+        <input type="hidden" name="debugEmail" value="albanmuhammad07@gmail.com" />
 
         {/* Header */}
         <div className="text-center space-y-2">
