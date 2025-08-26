@@ -58,24 +58,7 @@ const TestDriveLeadForm: React.FC = () => {
         <input
           type="hidden"
           name="00NgK000016V8i5" // Schedule Date (Lead)
-          value={
-            (() => {
-              const raw = formData.schedule_date?.trim();
-              if (!raw) return "";
-              // raw contoh: "2025-08-29T10:10"
-              const d = new Date(raw); // lokal browser
-              const M = (d.getMonth() + 1).toString();   // tanpa leading zero
-              const D = d.getDate().toString();          // tanpa leading zero
-              const yyyy = d.getFullYear();
-              let h = d.getHours();
-              const mm = d.getMinutes().toString().padStart(2, "0");
-              const ss = d.getSeconds().toString().padStart(2, "0"); // biasanya "00"
-              const ampm = h >= 12 ? "PM" : "AM";
-              h = h % 12; if (h === 0) h = 12;
-              // Format final, lalu trim untuk cegah spasi aneh
-              return `${M}/${D}/${yyyy} ${h}:${mm}:${ss} ${ampm}`.trim();
-            })()
-          }
+          value={formData.schedule_date ? new Date(formData.schedule_date).toISOString() : '—'}
         />
 
 
