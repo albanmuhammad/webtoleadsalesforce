@@ -57,12 +57,22 @@ const TestDriveLeadForm: React.FC = () => {
         <input type="hidden" name="00NgK0000167sqv" value={formData.test_drive ? "1" : "0"} />
         <input
           type="hidden"
-          name="00NgK000016V8i5" // pastikan ini Field Id dari generator Web-to-Lead
+          name="00NgK000016V8i5" // pastikan ini Field Id dari generator Web-to-Lead utk Schedule_Date__c (Lead)
           value={
             (() => {
               if (!formData.schedule_date) return "";
-              const d = new Date(formData.schedule_date);
-              return d.toISOString(); // ISO 8601: YYYY-MM-DDTHH:mm:ss.sssZ
+              // schedule_date dari <input type="datetime-local"> berbentuk "YYYY-MM-DDTHH:mm"
+              const d = new Date(formData.schedule_date); // dianggap LOCAL time user
+              const M = d.getMonth() + 1;                // tanpa leading zero
+              const D = d.getDate();                     // tanpa leading zero
+              const yyyy = d.getFullYear();
+              let h = d.getHours();
+              const mm = d.getMinutes().toString().padStart(2, "0");
+              const ss = d.getSeconds().toString().padStart(2, "0");
+              const ampm = h >= 12 ? "PM" : "AM";
+              h = h % 12; if (h === 0) h = 12;
+              // => "M/D/YYYY h:mm:ss AM/PM"
+              return `${M}/${D}/${yyyy} ${h}:${mm}:${ss} ${ampm}`;
             })()
           }
         />
