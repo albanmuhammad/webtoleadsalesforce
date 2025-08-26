@@ -18,20 +18,6 @@ const TestDriveLeadForm: React.FC = () => {
     product_ext: ""
   });
 
-  const scheduleForSF = useMemo(() => {
-    if (!formData.schedule_date) return "";
-    const d = new Date(formData.schedule_date); // treated as local time
-    const pad = (n: number) => n.toString().padStart(2, '0');
-    const mm = pad(d.getMonth() + 1);
-    const dd = pad(d.getDate());
-    const yyyy = d.getFullYear();
-    let hrs = d.getHours();
-    const mins = pad(d.getMinutes());
-    const ampm = hrs >= 12 ? 'PM' : 'AM';
-    hrs = hrs % 12; if (hrs === 0) hrs = 12;
-    return `${mm}/${dd}/${yyyy} ${hrs}:${mins} ${ampm}`;
-  }, [formData.schedule_date]);
-
   const productOptions = [
     { label: 'Fortuern-GR-2024-Black-AWD', value: '01tgK000004g7u1QAA' },
     { label: 'Camry-GR-2024-Silver-AT', value: '01tgK000004gAlRQAU' },
@@ -69,7 +55,21 @@ const TestDriveLeadForm: React.FC = () => {
         <input type="hidden" name="retURL" value="http://webtoleadsalesforce.vercel.app" />
         <input type="hidden" name="00NgK00001NJC6K" value={formData.product_ext} />
         <input type="hidden" name="00NgK0000167sqv" value={formData.test_drive ? "1" : "0"} />
-        <input type="hidden" name="00NgK000016V8i5" value={scheduleForSF} />
+        <input type="hidden" name="00NgK000016V8i5" value={
+          (() => {
+            if (!formData.schedule_date) return "";
+            const d = new Date(formData.schedule_date); // local
+            // Kirim "M/D/YYYY h:mm AM/PM" (tanpa leading zero untuk M & D)
+            const M = d.getMonth() + 1;
+            const D = d.getDate();
+            const yyyy = d.getFullYear();
+            let h = d.getHours();
+            const m = d.getMinutes().toString().padStart(2, "0");
+            const ampm = h >= 12 ? "PM" : "AM";
+            h = h % 12; if (h === 0) h = 12;
+            return `${M}/${D}/${yyyy} ${h}:${m} ${ampm}`;
+          })()
+        } />
         <input type="hidden" name="00NgK00001HG4oh" value={formData.location} />
 
         {/* Header */}
@@ -202,7 +202,6 @@ const TestDriveLeadForm: React.FC = () => {
             onChange={handleInputChange}
           />
           {/* Optional: debug preview */}
-          <p className="text-xs text-zinc-500 mt-1">SF will receive: {scheduleForSF || '—'}</p>
         </div>
 
         {/* Location */}
