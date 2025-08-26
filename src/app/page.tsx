@@ -55,21 +55,17 @@ const TestDriveLeadForm: React.FC = () => {
         <input type="hidden" name="retURL" value="http://webtoleadsalesforce.vercel.app" />
         <input type="hidden" name="00NgK00001NJC6K" value={formData.product_ext} />
         <input type="hidden" name="00NgK0000167sqv" value={formData.test_drive ? "1" : "0"} />
-        <input type="hidden" name="00NgK000016V8i5" value={
-          (() => {
-            if (!formData.schedule_date) return "";
-            const d = new Date(formData.schedule_date); // local
-            // Kirim "M/D/YYYY h:mm AM/PM" (tanpa leading zero untuk M & D)
-            const M = d.getMonth() + 1;
-            const D = d.getDate();
-            const yyyy = d.getFullYear();
-            let h = d.getHours();
-            const m = d.getMinutes().toString().padStart(2, "0");
-            const ampm = h >= 12 ? "PM" : "AM";
-            h = h % 12; if (h === 0) h = 12;
-            return `${M}/${D}/${yyyy} ${h}:${m} ${ampm}`;
-          })()
-        } />
+        <input
+          type="hidden"
+          name="00NgK000016V8i5" // pastikan ini Field Id dari generator Web-to-Lead
+          value={
+            (() => {
+              if (!formData.schedule_date) return "";
+              const d = new Date(formData.schedule_date);
+              return d.toISOString().split('.')[0] + "Z";
+            })()
+          }
+        />
         <input type="hidden" name="00NgK00001HG4oh" value={formData.location} />
 
         {/* Header */}
